@@ -1,7 +1,6 @@
 package env_test
 
 import (
-	"os"
 	"reflect"
 	"testing"
 
@@ -51,9 +50,9 @@ func TestInit(t *testing.T) { //nolint:tparallel
 	// 環境変数を操作するため直列でテスト
 	for _, tt := range tests { //nolint:paralleltest
 		t.Run(tt.name, func(t *testing.T) {
-			os.Setenv("ENV", "")
+			t.Setenv("ENV", "")
 			env.Init()
-			os.Setenv("ENV", tt.env)
+			t.Setenv("ENV", tt.env)
 			env.Init()
 			if !reflect.DeepEqual(env.Get(), tt.want) {
 				t.Errorf("Env = %v, want %v", env.Get(), tt.want)
