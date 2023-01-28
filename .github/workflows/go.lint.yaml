@@ -1,0 +1,28 @@
+name: go lint
+run-name: ${{ github.ref_name }} by @${{ github.actor }} ${{ github.workflow }}
+on:
+  pull_request:
+    paths:
+      - .github/workflows/go.lint.yaml
+      - "**/*.go"
+      - .golangci.yaml
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version-file: go.mod
+      - name: Go build
+        run: go build ./...
+      - name: Setup aqua
+        uses: aquaproj/aqua-installer@v2.0.2
+        with:
+          aqua_version: v1.32.0
+      - name: Setup backend go tool
+        run: ${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin/aqua i
+      - name: Golangci lint
+        run: golangci-lint run --fix
