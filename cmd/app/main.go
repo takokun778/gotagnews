@@ -1,48 +1,27 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"os"
-	"time"
+	"context"
 
+	"github.com/takokun778/gotagnews/internal/adapter/controller"
+	"github.com/takokun778/gotagnews/internal/adapter/gateway"
+	"github.com/takokun778/gotagnews/internal/adapter/notifier"
+	"github.com/takokun778/gotagnews/internal/usecase/interactor"
 	"github.com/takokun778/gotagnews/pkg/log"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		ctx := log.SetLogCtx(r.Context())
+	gotagRepository := gateway.NewGotag()
 
-		log.GetLogCtx(ctx).Info(fmt.Sprintf("[%s] %s", r.Method, r.URL))
+	githubRepository := gateway.NewGitHub()
 
-		_, _ = w.Write([]byte(Hello("Golang")))
-	})
+	gotagExternal := notifier.NewGotag()
 
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		_, _ = w.Write([]byte("OK"))
-	})
+	usecase := interactor.NewGotagNotice(gotagRepository, githubRepository, gotagExternal)
 
-	log.Log().Info("starting server...")
+	cmd := controller.NewGotag(usecase)
 
-	const timeout = 3
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	if err := cmd.Cmd(context.Background()); err != nil {
+		log.Log().Panic("failed to run command", log.ErrorField(err))
 	}
-
-	server := &http.Server{
-		Addr:              fmt.Sprintf(":%s", port),
-		ReadHeaderTimeout: timeout * time.Second,
-	}
-
-	log.Log().Info(fmt.Sprintf("listening on %s", server.Addr))
-
-	if err := server.ListenAndServe(); err != nil {
-		log.Log().Fatal("failed to listen and serve", log.ErrorField(err))
-	}
-}
-
-func Hello(name string) string {
-	return fmt.Sprintf("Hello, %s!", name)
 }
