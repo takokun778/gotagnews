@@ -1,9 +1,6 @@
 name: cron
 run-name: ${{ github.ref_name }} by @${{ github.actor }} ${{ github.workflow }}
 on:
-  pull_request:
-    paths:
-      - .github/workflows/cron.yaml
   schedule:
     - cron: '0 * * * *'
 jobs:
