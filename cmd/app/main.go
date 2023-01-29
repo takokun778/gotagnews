@@ -20,12 +20,12 @@ func main() {
 
 	db, err := mongo.NewClient().Of(config.Get().MongoDBURI)
 	if err != nil {
-		log.Log().Panic("failed to connect to mongo", log.ErrorField(err))
+		log.GetLogCtx(ctx).Panic("failed to connect to mongo", log.ErrorField(err))
 	}
 
 	defer func() {
 		if err := db.Disconnect(ctx); err != nil {
-			log.Log().Error("failed to disconnect from mongo db", log.ErrorField(err))
+			log.GetLogCtx(ctx).Error("failed to disconnect from mongo db", log.ErrorField(err))
 		}
 	}()
 
@@ -40,6 +40,6 @@ func main() {
 	cmd := controller.NewGotag(usecase)
 
 	if err := cmd.Cmd(ctx); err != nil {
-		log.Log().Panic("failed to run command", log.ErrorField(err))
+		log.GetLogCtx(ctx).Panic("failed to run command", log.ErrorField(err))
 	}
 }
