@@ -3,17 +3,35 @@ package main
 import (
 	"context"
 
+	"github.com/google/go-github/v50/github"
 	"github.com/takokun778/gotagnews/internal/adapter/controller"
 	"github.com/takokun778/gotagnews/internal/adapter/gateway"
 	"github.com/takokun778/gotagnews/internal/adapter/notifier"
+	"github.com/takokun778/gotagnews/internal/driver/config"
+	"github.com/takokun778/gotagnews/internal/driver/mongo"
 	"github.com/takokun778/gotagnews/internal/usecase/interactor"
 	"github.com/takokun778/gotagnews/pkg/log"
 )
 
 func main() {
-	gotagRepository := gateway.NewGotag()
+	ctx := log.SetLogCtx(context.Background())
 
-	githubRepository := gateway.NewGitHub()
+	config.Init()
+
+	db, err := mongo.NewClient().Of(config.Get().MongoDBURI)
+	if err != nil {
+		log.Log().Panic("failed to connect to mongo", log.ErrorField(err))
+	}
+
+	defer func() {
+		if err := db.Disconnect(ctx); err != nil {
+			log.Log().Error("failed to disconnect from mongo db", log.ErrorField(err))
+		}
+	}()
+
+	gotagRepository := gateway.NewGotag(db)
+
+	githubRepository := gateway.NewGitHub(github.NewClient(nil))
 
 	gotagExternal := notifier.NewGotag()
 
@@ -21,7 +39,7 @@ func main() {
 
 	cmd := controller.NewGotag(usecase)
 
-	if err := cmd.Cmd(context.Background()); err != nil {
+	if err := cmd.Cmd(ctx); err != nil {
 		log.Log().Panic("failed to run command", log.ErrorField(err))
 	}
 }

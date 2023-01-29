@@ -1,4 +1,5 @@
 include .env
+include .secret.env
 export
 
 .PHONY: help
@@ -72,3 +73,7 @@ ymlfmt: ## yaml file format
 .PHONY: ymlint
 ymlint: ## yaml file lint
 	@yamlfmt -lint && actionlint
+
+.PHONY: mongo
+mongo: ## mongo
+	@go run cmd/mongo/main.go

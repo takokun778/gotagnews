@@ -50,6 +50,12 @@ func (gni *GotagNotice) Execute(
 
 	res := dst.Take(src)
 
+	if len(res) == 0 {
+		log.GetLogCtx(ctx).Info("no new gotag found")
+
+		return port.GotagNoticeOutput{}, nil
+	}
+
 	if err := gni.gotagRepository.SaveAll(ctx, res); err != nil {
 		log.GetLogCtx(ctx).Warn("failed to save all gotag from gotag repository", log.ErrorField(err))
 

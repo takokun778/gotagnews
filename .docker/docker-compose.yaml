@@ -7,7 +7,7 @@ services:
       args:
         GOLANG_VERSION: ${GOLANG_VERSION}
     environment:
-      PORT: 8080
+      MONGODB_URI: ${MONGODB_URI}
     volumes:
       - ../:/app
     restart: always
