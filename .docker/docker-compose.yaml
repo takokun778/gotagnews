@@ -1,0 +1,13 @@
+services:
+  app:
+    container_name: ${APP_NAME}-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GOLANG_VERSION: ${GOLANG_VERSION}
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+    volumes:
+      - ../:/app
+    restart: always
