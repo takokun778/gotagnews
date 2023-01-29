@@ -1,0 +1,21 @@
+name: cron
+run-name: ${{ github.ref_name }} by @${{ github.actor }} ${{ github.workflow }}
+on:
+  schedule:
+    - cron: '0 * * * *'
+jobs:
+  notice:
+    runs-on: ubuntu-22.04
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      LINE_CHANNEL_SECRET: ${{ secrets.LINE_CHANNEL_SECRET }}
+      LINE_CHANNEL_TOKEN: ${{ secrets.LINE_CHANNEL_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
+      - name: Notice Golang Tags
+        run: go run cmd/app/main.go
