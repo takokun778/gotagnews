@@ -77,3 +77,11 @@ ymlint: ## yaml file lint
 .PHONY: mongo
 mongo: ## mongo
 	@go run cmd/mongo/main.go
+
+.PHONY: linetest
+linetest: ## linetest
+	@go run cmd/line/main.go
+
+.PHONY: runtest
+runtest: ## run test
+	@go run cmd/app/main.go

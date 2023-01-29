@@ -8,6 +8,7 @@ import (
 	"github.com/takokun778/gotagnews/internal/adapter/gateway"
 	"github.com/takokun778/gotagnews/internal/adapter/notifier"
 	"github.com/takokun778/gotagnews/internal/driver/config"
+	"github.com/takokun778/gotagnews/internal/driver/line"
 	"github.com/takokun778/gotagnews/internal/driver/mongo"
 	"github.com/takokun778/gotagnews/internal/usecase/interactor"
 	"github.com/takokun778/gotagnews/pkg/log"
@@ -29,11 +30,16 @@ func main() {
 		}
 	}()
 
+	channel, err := line.NewClient().Of(config.Get().LINEChannelSecret, config.Get().LINEChannelToken)
+	if err != nil {
+		log.GetLogCtx(ctx).Panic("failed to connect to line", log.ErrorField(err))
+	}
+
 	gotagRepository := gateway.NewGotag(db)
 
 	githubRepository := gateway.NewGitHub(github.NewClient(nil))
 
-	gotagExternal := notifier.NewGotag()
+	gotagExternal := notifier.NewGotag(channel)
 
 	usecase := interactor.NewGotagNotice(gotagRepository, githubRepository, gotagExternal)
 

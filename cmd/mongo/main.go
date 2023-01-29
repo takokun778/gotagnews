@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"os"
 	"time"
 
 	"github.com/takokun778/gotagnews/internal/adapter/gateway"
+	"github.com/takokun778/gotagnews/internal/driver/config"
 	"github.com/takokun778/gotagnews/pkg/log"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -18,12 +18,12 @@ const (
 )
 
 func main() {
+	config.Init()
+
 	serverAPIOptions := options.ServerAPI(options.ServerAPIVersion1)
 
-	uri := os.Getenv("MONGODB_URI")
-
 	clientOptions := options.Client().
-		ApplyURI(uri).
+		ApplyURI(config.Get().MongoDBURI).
 		SetServerAPIOptions(serverAPIOptions)
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
