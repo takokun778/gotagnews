@@ -114,7 +114,7 @@ func TestGotagNoticeExecute(t *testing.T) {
 				},
 				githubRepository: &mock.GitHub{
 					T:    t,
-					List: model.GotagList{},
+					List: model.GotagList{model.Gotag{ID: gotag.ID("a")}},
 				},
 				external: &mock.Gotag{
 					T:    t,
@@ -136,7 +136,7 @@ func TestGotagNoticeExecute(t *testing.T) {
 				},
 				githubRepository: &mock.GitHub{
 					T:    t,
-					List: model.GotagList{},
+					List: model.GotagList{model.Gotag{ID: gotag.ID("a")}},
 				},
 				external: &mock.Gotag{
 					T:         t,
