@@ -13,7 +13,7 @@ import (
 func main() {
 	config.Init()
 
-	channel, err := line.NewClient().Of(config.Get().LINEChannelSecret, config.Get().LINEChannelToken)
+	channel, err := line.NewClient().Of(config.Get().LINESecret, config.Get().LINEToken)
 	if err != nil {
 		log.Log().Panic("failed to connect to line", log.ErrorField(err))
 	}

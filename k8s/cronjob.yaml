@@ -16,16 +16,16 @@ spec:
                 - name: MONGODB_URI
                   valueFrom:
                     secretKeyRef:
-                      name: gotagnews-secret
-                      key: MONGODB_URI
-                - name: LINE_CHANNEL_SECRET
+                      name: gotagnews-secret-mongodb-uri
+                      key: mongodb-uri
+                - name: LINE_SECRET
                   valueFrom:
                     secretKeyRef:
-                      name: gotagnews-secret
-                      key: LINE_CHANNEL_SECRET
-                - name: LINE_CHANNEL_TOKEN
+                      name: gotagnews-secret-line-secret
+                      key: line-secret
+                - name: LINE_TOKEN
                   valueFrom:
                     secretKeyRef:
-                      name: gotagnews-secret
-                      key: LINE_CHANNEL_TOKEN
+                      name: gotagnews-secret-line-token
+                      key: line-token
           restartPolicy: Never
