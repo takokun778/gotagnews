@@ -30,7 +30,7 @@ func main() {
 		}
 	}()
 
-	channel, err := line.NewClient().Of(config.Get().LINEChannelSecret, config.Get().LINEChannelToken)
+	channel, err := line.NewClient().Of(config.Get().LINESecret, config.Get().LINEToken)
 	if err != nil {
 		log.GetLogCtx(ctx).Panic("failed to connect to line", log.ErrorField(err))
 	}
