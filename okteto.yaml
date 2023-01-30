@@ -1,2 +1,2 @@
 deploy:
-- okteto.sh
+- bash okteto.sh
