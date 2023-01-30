@@ -11,7 +11,7 @@ spec:
           containers:
             - name: gotagnews
               image: takokun778/gotagnews:latest
-              imagePullPolicy: IfNotPresent
+              imagePullPolicy: Always
               env:
                 - name: MONGODB_URI
                   valueFrom:
