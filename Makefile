@@ -75,6 +75,22 @@ ymlfmt: ## yaml file format
 ymlint: ## yaml file lint
 	@yamlfmt -lint && actionlint
 
+.PHONY: key
+key: ## generate age key
+	@age-keygen
+
+.PHONY: secret
+secret: ## Create kubernates secret yaml. ex) make secret secret=password
+	@script/secret.sh ${secret}
+
+.PHONY: encrypt
+encrypt: ## Encrypt kubernates secret. ex) make encrypt secret=password
+	@script/encrypt.sh ${secret}
+
+.PHONY: decrypt
+decrypt: ## Decrypt kubernates secret. ex) make decrypt secret=password
+	@script/decrypt.sh ${secret}
+
 .PHONY: mongo
 mongo: ## mongo
 	@go run cmd/mongo/main.go
