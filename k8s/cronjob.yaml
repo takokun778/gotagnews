@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: "gotagnews"
+  name: gotagnews
 spec:
   schedule: "0 * * * *"
   jobTemplate:
@@ -9,7 +9,7 @@ spec:
       template:
         spec:
           containers:
-            - name: "gotagnews"
+            - name: gotagnews
               image: takokun778/gotagnews:latest
               imagePullPolicy: IfNotPresent
               env:
