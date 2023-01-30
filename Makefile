@@ -17,6 +17,7 @@ aqua: ## insatll aqua
 .PHONY: tool
 tool: ## install tool
 	@aqua i
+	@curl https://get.okteto.com -sSfL | sh
 
 .PHONY: compile
 compile: ## go compile
