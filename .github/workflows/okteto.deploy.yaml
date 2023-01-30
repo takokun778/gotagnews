@@ -9,6 +9,9 @@ on:
       - k8s/*.yaml
   schedule:
     - cron: '0 15 * * *'
+  pull_request:
+    paths:
+      - .github/workflows/okteto.deploy.yaml
 jobs:
   deploy:
     runs-on: ubuntu-latest
