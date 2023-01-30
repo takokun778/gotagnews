@@ -1,0 +1,23 @@
+name: okteto deploy
+run-name: ${{ github.ref_name }} by @${{ github.actor }} ${{ github.workflow }}
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/okteto.deploy.yaml
+      - k8s/*.yaml
+  schedule:
+    - cron: '0 15 * * *'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install okteto
+        run: curl https://get.okteto.com -sSfL | sh
+      - name: Okteto login
+        run: okteto login --token ${{ secrets.OKTETO_TOKEN }}
+      - name: Okteto deploy
+        run: okteto deploy --namespace gotagnews-takokun778
