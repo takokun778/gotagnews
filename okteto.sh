@@ -20,4 +20,4 @@ chmod +x sops
 
 ./sops --decrypt --in-place k8s/secret/line-token.yaml
 
-kubectl -n gotagnews-takokun778 apply -f ./k8s
+find . -name "k8s/**/*.yaml" | xargs -I {} kubectl -n gotagnews-takokun778 apply -f {}
