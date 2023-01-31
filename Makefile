@@ -91,6 +91,10 @@ encrypt: ## Encrypt kubernates secret. ex) make encrypt secret=password
 decrypt: ## Decrypt kubernates secret. ex) make decrypt secret=password
 	@script/decrypt.sh ${secret}
 
+.PHONY: sops
+sops: ## sops kubernates secret. ex) make sops secret=password
+	@sops --decrypt --in-place k8s/secret/${secret}.yaml
+
 .PHONY: mongo
 mongo: ## mongo
 	@go run cmd/mongo/main.go
