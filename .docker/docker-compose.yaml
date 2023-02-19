@@ -4,8 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        GOLANG_VERSION: ${GOLANG_VERSION}
     environment:
       MONGODB_URI: ${MONGODB_URI}
     volumes:
