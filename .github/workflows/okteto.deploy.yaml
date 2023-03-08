@@ -20,4 +20,4 @@ jobs:
       - name: Okteto login
         run: okteto login --token ${{ secrets.OKTETO_TOKEN }}
       - name: Okteto deploy
-        run: okteto deploy --namespace gotagnews-takokun778
+        run: okteto deploy --namespace takokun778
