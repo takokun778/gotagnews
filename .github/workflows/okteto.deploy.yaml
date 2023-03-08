@@ -18,6 +18,6 @@ jobs:
       - name: Install okteto
         run: curl https://get.okteto.com -sSfL | sh
       - name: Okteto login
-        run: okteto login --token ${{ secrets.OKTETO_TOKEN }}
+        run: okteto context use https://cloud.okteto.com --token ${{ secrets.OKTETO_TOKEN }}
       - name: Okteto deploy
         run: okteto deploy --namespace takokun778
