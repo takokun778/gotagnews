@@ -14,10 +14,8 @@ mv sops-v${SOPS_VERSION}.linux.amd64 sops
 
 chmod +x sops
 
-./sops --decrypt --in-place k8s/secret/mongodb-uri.yaml
-
-./sops --decrypt --in-place k8s/secret/line-secret.yaml
-
-./sops --decrypt --in-place k8s/secret/line-token.yaml
+for chart in $(find k8s/secret | grep yaml) ; do
+    ./sops --decrypt --in-place ${chart}
+done
 
 cd k8s && find . -name "*.yaml" | xargs -I {} kubectl -n takokun778 apply -f {}
