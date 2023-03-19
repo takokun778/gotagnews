@@ -42,6 +42,11 @@ mod: ## go modules list
 .PHONY: update
 update: ## go modules update
 	@go get -u -t ./...
+	@go mod vendor
+
+.PHONY: vendor
+vendor: ## go mod vendor
+	@go mod vendor
 
 .PHONY: test
 test: ## unit test
@@ -61,7 +66,7 @@ up: ## docker compose up with air hot reload
 
 .PHONY: down
 down: ## docker compose down
-	@docker compose --project-name ${APP_NAME} down
+	@docker compose --project-name ${APP_NAME} down --volumes
 
 .PHONY: log
 log: ## docker log
