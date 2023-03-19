@@ -6,29 +6,32 @@ jobs:
   container-push:
     runs-on: ubuntu-22.04
     outputs:
-      image-name: ${{ steps.build-and-push.outputs.image-name }}
       image-tag: ${{ steps.build-and-push.outputs.image-tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Create tag
+        id: create-tag
+        run: |
+          TAG=`date +%Y-%m-%d-%H-%M-%S`
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
       - name: Set up go
         uses: actions/setup-go@v4
         with:
           go-version-file: go.mod
-      - name: Set up ko
-        run: go install github.com/google/ko@latest
+      - name: Setup aqua
+        uses: aquaproj/aqua-installer@v2.0.2
+        with:
+          aqua_version: v1.37.0
+      - name: Install ko
+        run: ${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}/bin/aqua install -t ko
       - name: Docker login
         run: ko login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }} index.docker.io
       - name: Container build and push
         id: build-and-push
         working-directory: ./cmd/app
         run: |
-          IMAGE_NAME=gotagnews
-          echo "image-name=${IMAGE_NAME}" >> $GITHUB_OUTPUT
-
-          IMAGE_TAG="test"
-          echo "image-tag=${IMAGE_TAG}" >> $GITHUB_OUTPUT
-
-          KO_DOCKER_REPO=${{ secrets.DOCKERHUB_USERNAME }}/${IMAGE_NAME} \
+          KO_DOCKER_REPO=${{ secrets.DOCKERHUB_USERNAME }}/gotagnews \
           SOURCE_DATE_EPOCH=$(date +%s) \
-          ko build --sbom=none --bare --tags=${IMAGE_TAG},latest ./ --platform=linux/amd64
+          ko build --sbom=none --bare --tags=${{ env.TAG }},latest ./ --platform=linux/amd64
