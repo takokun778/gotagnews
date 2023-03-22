@@ -31,21 +31,14 @@ fmt: ## go format
 lint: ## go lint
 	@golangci-lint run --fix
 
-.PHONY: tidy
-tidy: ## go mod tidy
-	@go mod tidy
-
-.PHONY: mod
-mod: ## go modules list
-	@go list -u -m all
-
 .PHONY: update
 update: ## go modules update
 	@go get -u -t ./...
 	@go mod vendor
 
-.PHONY: vendor
-vendor: ## go mod vendor
+.PHONY: mod
+mod: ## go mod tidy & go mod vendor
+	@go mod tidy
 	@go mod vendor
 
 .PHONY: test
