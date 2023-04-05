@@ -1,6 +1,6 @@
 ARG GOLANG_VERSION
 
-FROM golang:1.19.6-alpine
+FROM golang:1.20.3-alpine
 
 WORKDIR /app
 
