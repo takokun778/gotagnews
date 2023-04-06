@@ -16,7 +16,7 @@ type GitHub struct {
 	ErrFindAll error
 }
 
-func (gh *GitHub) FindAll(ctx context.Context) (model.GotagList, error) {
+func (gh *GitHub) FindAll(_ context.Context) (model.GotagList, error) {
 	gh.T.Helper()
 
 	return gh.List, gh.ErrFindAll
