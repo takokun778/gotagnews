@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 
-	"github.com/google/go-github/v50/github"
+	"github.com/google/go-github/v51/github"
 	"github.com/takokun778/gotagnews/internal/adapter/controller"
 	"github.com/takokun778/gotagnews/internal/adapter/gateway"
 	"github.com/takokun778/gotagnews/internal/adapter/notifier"

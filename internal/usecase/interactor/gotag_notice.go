@@ -32,7 +32,7 @@ func NewGotagNotice(
 
 func (gni *GotagNotice) Execute(
 	ctx context.Context,
-	input port.GotagNoticeInput,
+	_ port.GotagNoticeInput,
 ) (port.GotagNoticeOutput, error) {
 	src, err := gni.gotagRepository.FindAll(ctx)
 	if err != nil {
