@@ -25,19 +25,19 @@ type Gotag struct {
 	ErrNotice  error
 }
 
-func (g *Gotag) SaveAll(ctx context.Context, list model.GotagList) error {
+func (g *Gotag) SaveAll(_ context.Context, _ model.GotagList) error {
 	g.T.Helper()
 
 	return g.ErrSaveAll
 }
 
-func (g *Gotag) FindAll(ctx context.Context) (model.GotagList, error) {
+func (g *Gotag) FindAll(_ context.Context) (model.GotagList, error) {
 	g.T.Helper()
 
 	return g.List, g.ErrFindAll
 }
 
-func (g *Gotag) Notice(ctx context.Context, list model.GotagList) error {
+func (g *Gotag) Notice(_ context.Context, list model.GotagList) error {
 	g.T.Helper()
 
 	if g.ErrNotice != nil {
