@@ -1,6 +1,6 @@
 module github.com/takokun778/gotagnews
 
-go 1.19
+go 1.20
 
 require (
 	github.com/google/go-github/v51 v51.0.0
