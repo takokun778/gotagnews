@@ -7,9 +7,8 @@ import (
 	"github.com/takokun778/gotagnews/internal/driver/env"
 )
 
-func TestInit(t *testing.T) { //nolint:tparallel
-	t.Parallel()
-
+//nolint:paralleltest
+func TestInit(t *testing.T) {
 	tests := []struct {
 		name string
 		env  string
