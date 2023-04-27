@@ -3,7 +3,6 @@ module github.com/takokun778/gotagnews
 go 1.20
 
 require (
-	github.com/google/go-github/v51 v51.0.0
 	github.com/google/go-github/v52 v52.0.0
 	github.com/google/uuid v1.3.0
 	github.com/line/line-bot-sdk-go/v7 v7.20.0
