@@ -6,7 +6,7 @@ require (
 	github.com/google/go-github/v52 v52.0.0
 	github.com/google/uuid v1.3.0
 	github.com/line/line-bot-sdk-go/v7 v7.20.0
-	go.mongodb.org/mongo-driver v1.11.4
+	go.mongodb.org/mongo-driver v1.11.6
 	go.uber.org/zap v1.24.0
 )
 
