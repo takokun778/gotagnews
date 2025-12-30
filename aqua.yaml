@@ -14,4 +14,4 @@ packages:
   - name: google/ko@v0.14.1
   - name: rhysd/actionlint@v1.6.25
   - name: mikefarah/yq@v4.34.1
-  - name: mozilla/sops@v3.7.3
+  - name: mozilla/sops@v3.11.0
