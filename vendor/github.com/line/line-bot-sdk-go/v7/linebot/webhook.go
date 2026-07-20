@@ -22,7 +22,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
 )
 
@@ -34,7 +33,7 @@ func (client *Client) ParseRequest(r *http.Request) ([]*Event, error) {
 // ParseRequest func
 func ParseRequest(channelSecret string, r *http.Request) ([]*Event, error) {
 	defer r.Body.Close()
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +164,7 @@ func (call *TestWebhook) WithContext(ctx context.Context) *TestWebhook {
 
 // Do method
 func (call *TestWebhook) Do() (*TestWebhookResponse, error) {
-	res, err := call.c.get(call.ctx, call.c.endpointBase, call.endpoint, nil)
+	res, err := call.c.post(call.ctx, call.endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
